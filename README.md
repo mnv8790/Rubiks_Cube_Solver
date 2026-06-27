@@ -1,19 +1,46 @@
 # Rubik's Cube Solver
 
-A C++ Rubik's Cube solver project using the same layered structure as the reference projects.
-The program also prints the time taken to solve each scramble.
+This is a C++20 Rubik's Cube solver built with the same project layering as the reference project: cube models, search solvers, and a corner pattern database. The code is kept at student-project level, but the move implementation is written differently so it is not just a copied version of the reference files.
+
+## What the project does
+
+- Represents a 3x3 Rubik's Cube using three model styles: 1D array, 3D array, and bitboard.
+- Supports all 18 standard moves: `L L' L2 R R' R2 U U' U2 D D' D2 F F' F2 B B' B2`.
+- Solves short scrambles using IDDFS by default.
+- Supports IDA* when a corner pattern database file is provided.
+- Prints the scramble, cube state, solution moves, solve time, and solved status.
 
 ## Folder structure
 
-- `Model/` - cube model base class plus 1D array, 3D array, and bitboard versions.
-- `Solver/` - BFS, DFS, IDDFS, and IDA* solver headers.
-- `PatternDatabase/` - nibble storage, permutation ranking, corner pattern database, and DB maker.
+```text
+Model/
+  RubicsCube1dArray.cpp
+  RubiksCube.cpp
+  RubiksCube.h
+  RubiksCube3dArray.cpp
+  RubiksCubeBitboard.cpp
 
-## What is different from the references
+Solver/
+  BFSSolver.h
+  DFSSolver.h
+  IDAstarSolver.h
+  IDDFSSolver.h
 
-This project keeps the same level and layout, but the move logic is rewritten. Instead of copying long face-swap blocks, all models use a shared sticker-coordinate rotation helper from `RubiksCube.cpp`. The three model files still store the cube differently.
+PatternDatabase/
+  CornerDBMaker.cpp
+  CornerDBMaker.h
+  CornerPatternDatabase.cpp
+  CornerPatternDatabase.h
+  NibbleArray.cpp
+  NibbleArray.h
+  PatternDatabase.cpp
+  PatternDatabase.h
+  PermutationIndexer.h
+  math.cpp
+  math.h
+```
 
-## Build
+## How to build it
 
 Direct build with g++:
 
@@ -28,7 +55,7 @@ cmake -S . -B build
 cmake --build build
 ```
 
-## Run
+## How to run it
 
 Default scramble:
 
@@ -36,18 +63,34 @@ Default scramble:
 ./rubiks_solver.exe
 ```
 
-On Windows, double-click `Run_Rubiks_Solver.bat` if the console closes too quickly.
+On Windows, double-click:
+
+```text
+Run_Rubiks_Solver.bat
+```
 
 Custom scramble:
 
 ```bash
 ./rubiks_solver.exe R U F'
+./rubiks_solver.exe R2 U B
 ```
 
-IDA* with a corner database file:
+IDA* with the reference database file:
 
 ```bash
-./rubiks_solver.exe --db Check_these/Database.txt R U F'
+./rubiks_solver.exe --db ..\Check_these\Database.txt R U
 ```
 
-For normal checking, keep scrambles short. Full cube solving can become slow without a prepared pattern database.
+## Sample output
+
+```text
+Solver: IDDFS
+Solution: B' U' R2
+Time taken: 14995 microseconds
+Solved: yes
+```
+
+## Notes
+
+The default solver is meant for short scrambles so the program stays easy to run and explain. Full random cube solving can be slow unless the pattern database is available and loaded with `--db`.
