@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(rubiks_solver
         main.cpp
         Model/RubiksCube.cpp
+        Model/RubicsCube1dArray.cpp
+        Model/RubiksCube3dArray.cpp
+        Model/RubiksCubeBitboard.cpp
         PatternDatabase/math.cpp
         PatternDatabase/NibbleArray.cpp
         PatternDatabase/PatternDatabase.cpp
