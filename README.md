@@ -68,6 +68,10 @@ PatternDatabase/
   PermutationIndexer.h
   math.cpp
   math.h
+
+tests.cpp
+Makefile
+.github/workflows/cpp.yml
 ```
 
 ## How to build
@@ -86,6 +90,34 @@ Using CMake:
 cmake -S . -B build
 cmake --build build
 ```
+
+If `make` is available:
+
+```bash
+make
+```
+
+The GitHub Actions workflow uses the Makefile to build the project and tests.
+
+## How to run tests
+
+The project includes a small automated test file in `tests.cpp`.
+
+With `make`:
+
+```bash
+make test
+make run_test
+```
+
+Without `make`:
+
+```bash
+g++ -std=c++20 tests.cpp Model/RubiksCube.cpp PatternDatabase/math.cpp PatternDatabase/NibbleArray.cpp PatternDatabase/PatternDatabase.cpp PatternDatabase/CornerPatternDatabase.cpp PatternDatabase/CornerDBMaker.cpp -o rubiks_tests.exe
+./rubiks_tests.exe
+```
+
+The tests check move/inverse behavior, repeated turns, a short IDDFS solve, and nibble-array storage.
 
 ## How to run
 
@@ -146,8 +178,12 @@ Solved: yes
 - Add stronger pruning rules to reduce repeated or unnecessary move sequences.
 - Add more pattern databases for better IDA* estimates.
 - Improve benchmarking across all cube representations.
-- Add unit tests for move correctness and solver behavior.
+- Add more tests for solver behavior and edge cases.
 - Add a cleaner command-line interface for choosing solver type and scramble length.
+
+## GitHub repo metadata
+
+Suggested GitHub description and topics are listed in `.github/repo-details.md`.
 
 ## References
 

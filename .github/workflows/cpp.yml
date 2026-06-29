@@ -1,0 +1,19 @@
+name: C++ Build and Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build project and tests
+        run: make
+
+      - name: Run tests
+        run: make run_test
